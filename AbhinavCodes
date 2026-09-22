@@ -1,0 +1,135 @@
+1. SJF CPU Scheduling
+#include<stdio.h>
+int main(){
+ int n,b[20],p[20],i,j,t,w=0;
+ scanf("%d",&n);
+ for(i=0;i<n;i++)scanf("%d",&b[i]),p[i]=i+1;
+
+ for(i=0;i<n;i++)
+  for(j=i+1;j<n;j++)
+   if(b[i]>b[j]){
+    t=b[i];b[i]=b[j];b[j]=t;
+    t=p[i];p[i]=p[j];p[j]=t;
+   }
+
+ printf("P BT WT TAT\n");
+ for(i=0;i<n;i++){
+  printf("P%d %d %d %d\n",p[i],b[i],w,w+b[i]);
+  w+=b[i];
+ }
+}
+
+2. Paging
+#include<stdio.h>
+int main(){
+ int m,s,n,r,p[10],f[10][20],i,j,x,y,o;
+ scanf("%d%d%d",&m,&s,&n);
+ r=m/s;
+
+ for(i=1;i<=n;i++){
+  scanf("%d",&p[i]);
+  if(p[i]>r){printf("Memory Full");return 0;}
+  r-=p[i];
+  for(j=0;j<p[i];j++)scanf("%d",&f[i][j]);
+ }
+
+ scanf("%d%d%d",&x,&y,&o);
+ if(x>n||y>=p[x]||o>=s)printf("Invalid");
+ else printf("Physical Address=%d",f[x][y]*s+o);
+}
+
+3. LRU Page Replacement
+#include<stdio.h>
+int main(){
+ int f,n,a[20],p[50],t[20]={0},i,j,k,x,c=0;
+ scanf("%d%d",&f,&n);
+ for(i=0;i<n;i++)scanf("%d",&p[i]);
+ for(i=0;i<f;i++)a[i]=-1;
+
+ for(i=0;i<n;i++){
+  for(j=0;j<f&&a[j]!=p[i];j++);
+
+  if(j==f){
+   x=0;
+   for(k=1;k<f;k++)
+    if(t[k]>t[x])x=k;
+   a[x]=p[i];j=x;c++;
+  }
+
+  for(k=0;k<f;k++)t[k]++;
+  t[j]=0;
+ }
+ printf("Page Faults=%d",c);
+}
+
+4. SSTF Disk Scheduling
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+ int n,a[100],v[100]={0},h,i,j,k,m,s=0;
+ scanf("%d",&n);
+ for(i=0;i<n;i++)scanf("%d",&a[i]);
+ scanf("%d",&h);
+
+ for(i=0;i<n;i++){
+  m=99999;
+  for(j=0;j<n;j++)
+   if(!v[j]&&abs(a[j]-h)<m)
+    m=abs(a[j]-h),k=j;
+
+  s+=m;
+  h=a[k];
+  v[k]=1;
+  printf("%d ",h);
+ }
+ printf("\nSeek=%d\nAvg=%.2f",s,(float)s/n);
+}
+
+5. Restoring Division
+#include<stdio.h>
+int main(){
+ int A=0,Q,M,n,i,mask;
+ scanf("%d%d%d",&Q,&M,&n);
+ mask=(1<<n)-1;
+
+ for(i=0;i<n;i++){
+  A=((A<<1)|((Q>>(n-1))&1))&mask;
+  Q=(Q<<1)&mask;
+  A-=M;
+
+  if(A<0)A+=M;
+  else Q|=1;
+ }
+ printf("Quotient=%d\nRemainder=%d",Q,A);
+}
+
+6. CRC
+import java.util.*;
+class CRC{
+ public static void main(String[]z){
+  Scanner s=new Scanner(System.in);
+  String a=s.next(),g=s.next();
+  int n=g.length(),i,j;
+  char[] x=(a+"0".repeat(n-1)).toCharArray();
+
+  for(i=0;i<=x.length-n;i++)
+   if(x[i]=='1')
+    for(j=0;j<n;j++)
+     x[i+j]=(char)(x[i+j]==g.charAt(j)?'0':'1');
+
+  System.out.print("CRC=");
+  for(i=x.length-n+1;i<x.length;i++)System.out.print(x[i]);
+ }
+}
+
+7. Checksum
+import java.util.*;
+class Checksum{
+ public static void main(String[]z){
+  Scanner s=new Scanner(System.in);
+  int n=s.nextInt(),sum=0;
+  while(n-->0)sum+=s.nextInt();
+  while(sum>255)sum=(sum&255)+(sum>>8);
+  System.out.println("Checksum="+(~sum&255));
+ }
+}

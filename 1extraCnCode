@@ -1,0 +1,41 @@
+import java.util.*;
+
+class Hamming {
+    public static void main(String[] a) {
+        Scanner s=new Scanner(System.in);
+
+        System.out.print("Enter two binary strings: ");
+        String x=s.next(),y=s.next();
+        int d=0;
+        for(int i=0;i<x.length();i++)
+            if(x.charAt(i)!=y.charAt(i)) d++;
+        System.out.println("Hamming Distance: "+d);
+
+        int[] h=new int[7];
+        System.out.print("Enter 4 data bits: ");
+        h[2]=s.nextInt(); h[4]=s.nextInt();
+        h[5]=s.nextInt(); h[6]=s.nextInt();
+
+        h[0]=h[2]^h[4]^h[6];
+        h[1]=h[2]^h[5]^h[6];
+        h[3]=h[4]^h[5]^h[6];
+
+        System.out.print("Hamming Code: ");
+        for(int i:h) System.out.print(i+" ");
+
+        System.out.println("\nEnter received code: ");
+        for(int i=0;i<7;i++) h[i]=s.nextInt();
+
+        int e=(h[0]^h[2]^h[4]^h[6])
+            +(h[1]^h[2]^h[5]^h[6])*2
+            +(h[3]^h[4]^h[5]^h[6])*4;
+
+        if(e==0) System.out.println("No Error");
+        else {
+            System.out.println("Error at position: "+e);
+            h[e-1]^=1;
+            System.out.print("Corrected Code: ");
+            for(int i:h) System.out.print(i+" ");
+        }
+    }
+}

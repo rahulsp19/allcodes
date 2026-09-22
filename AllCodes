@@ -1,0 +1,278 @@
+#include <stdio.h>
+
+#define MAX_FRAMES 10
+#define MAX_PAGES 50
+
+// Check if page is already in frames (hit)
+int isHit(int frames[], int n, int page) {
+    for (int i = 0; i < n; i++)
+        if (frames[i] == page) return 1;
+    return 0;
+}
+
+// Find which frame to replace (used farthest in future)
+int findOptimal(int frames[], int n, int pages[], int total, int current) {
+    int farthest = -1, replaceIdx = 0;
+
+    for (int i = 0; i < n; i++) {
+        int j;
+        for (j = current + 1; j < total; j++) {
+            if (frames[i] == pages[j]) {
+                if (j > farthest) {
+                    farthest = j;
+                    replaceIdx = i;
+                }
+                break;
+            }
+        }
+        // Page not used in future at all → best to replace
+        if (j == total) return i;
+    }
+    return replaceIdx;
+}
+
+int main() {
+    int frames[MAX_FRAMES], pages[MAX_PAGES];
+    int n, total, faults = 0, filled = 0;
+
+    printf("Enter number of frames: ");
+    scanf("%d", &n);
+
+    printf("Enter number of pages: ");
+    scanf("%d", &total);
+
+    printf("Enter page reference string: ");
+    for (int i = 0; i < total; i++)
+        scanf("%d", &pages[i]);
+
+    // Initialize frames to -1 (empty)
+    for (int i = 0; i < n; i++)
+        frames[i] = -1;
+
+    printf("\nPage\tFrames\t\t\tStatus\n");
+    printf("----\t------\t\t\t------\n");
+
+    for (int i = 0; i < total; i++) {
+        printf("%d\t", pages[i]);
+
+        if (isHit(frames, n, pages[i])) {
+            // Page Hit
+            for (int j = 0; j < n; j++)
+                printf("%d ", frames[j]);
+            printf("\t\t\tHIT\n");
+
+        } else {
+            // Page Fault
+            faults++;
+
+            if (filled < n) {
+                // Frames not full yet
+                frames[filled++] = pages[i];
+            } else {
+                // Replace optimal page
+                int idx = findOptimal(frames, n, pages, total, i);
+                frames[idx] = pages[i];
+            }
+
+            for (int j = 0; j < n; j++)
+                printf("%d ", frames[j]);
+            printf("\t\t\tFAULT\n");
+        }
+    }
+
+    printf("\nTotal Page Faults: %d\n", faults);
+    printf("Total Page Hits  : %d\n", total - faults);
+    return 0;
+}
+
+
+
+
+
+
+
+1. FCFS CPU Scheduling
+c
+#include <stdio.h>
+
+int main() {
+    int n, bt[20], wt[20], tat[20];
+    int total_wt = 0, total_tat = 0;
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter burst time for P%d: ", i + 1);
+        scanf("%d", &bt[i]);
+    }
+
+    wt[0] = 0;
+    for (int i = 1; i < n; i++)
+        wt[i] = wt[i-1] + bt[i-1];
+
+    printf("\nP\tBT\tWT\tTAT\n");
+    for (int i = 0; i < n; i++) {
+        tat[i] = bt[i] + wt[i];
+        total_wt  += wt[i];
+        total_tat += tat[i];
+        printf("P%d\t%d\t%d\t%d\n", i+1, bt[i], wt[i], tat[i]);
+    }
+
+    printf("\nAvg WT = %.2f", (float)total_wt / n);
+    printf("\nAvg TAT = %.2f\n", (float)total_tat / n);
+    return 0;
+}
+
+Logic: WT[0]=0, each next process waits for all previous ones to finish. TAT = BT + WT.
+
+2. Banker's Algorithm
+c
+#include <stdio.h>
+
+int main() {
+    int p, r, i, j, count = 0;
+    int alloc[10][10], max[10][10], need[10][10];
+    int avail[10], finish[10] = {0}, safeSeq[10];
+
+    printf("Enter processes and resources: ");
+    scanf("%d %d", &p, &r);
+
+    printf("Enter Allocation matrix:\n");
+    for (i = 0; i < p; i++)
+        for (j = 0; j < r; j++)
+            scanf("%d", &alloc[i][j]);
+
+    printf("Enter Max matrix:\n");
+    for (i = 0; i < p; i++)
+        for (j = 0; j < r; j++)
+            scanf("%d", &max[i][j]);
+
+    printf("Enter Available resources:\n");
+    for (i = 0; i < r; i++)
+        scanf("%d", &avail[i]);
+
+    // Need = Max - Alloc
+    for (i = 0; i < p; i++)
+        for (j = 0; j < r; j++)
+            need[i][j] = max[i][j] - alloc[i][j];
+
+    // Safety check
+    while (count < p) {
+        int found = 0;
+        for (i = 0; i < p; i++) {
+            if (!finish[i]) {
+                int ok = 1;
+                for (j = 0; j < r; j++)
+                    if (need[i][j] > avail[j]) { ok = 0; break; }
+
+                if (ok) {
+                    for (j = 0; j < r; j++)
+                        avail[j] += alloc[i][j];
+                    safeSeq[count++] = i;
+                    finish[i] = 1;
+                    found = 1;
+                }
+            }
+        }
+        if (!found) { printf("Unsafe state!\n"); return 0; }
+    }
+
+    printf("Safe sequence: ");
+    for (i = 0; i < p; i++)
+        printf("P%d ", safeSeq[i]);
+    printf("\n");
+    return 0;
+}
+
+Logic: Need = Max - Alloc. Find a process whose Need ≤ Available → run it → release its resources → repeat. If all finish = safe state.
+
+3. C-SCAN Disk Scheduling
+c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int t[25], n, h, total, i, j, temp, pos, k = 0, sum = 0;
+    int atr[25];
+
+    printf("Enter number of requests: ");  scanf("%d", &n);
+    printf("Enter head position: ");       scanf("%d", &h);
+    printf("Enter total tracks: ");        scanf("%d", &total);
+
+    printf("Enter track numbers:\n");
+    for (i = 0; i < n; i++) scanf("%d", &t[i]);
+
+    // Add head, 0, and max track to array
+    t[n] = h; t[n+1] = 0; t[n+2] = total - 1;
+    n += 3;
+
+    // Sort
+    for (i = 0; i < n-1; i++)
+        for (j = 0; j < n-i-1; j++)
+            if (t[j] > t[j+1]) { temp = t[j]; t[j] = t[j+1]; t[j+1] = temp; }
+
+    // Find head position
+    for (i = 0; i < n; i++)
+        if (t[i] == h) { pos = i; break; }
+
+    // C-SCAN: go right to end, jump to 0, come back to head
+    for (i = pos; i < n; i++) atr[k++] = t[i];
+    for (i = 0; i < pos; i++) atr[k++] = t[i];
+
+    // Calculate total movement
+    for (i = 0; i < k-1; i++)
+        sum += abs(atr[i+1] - atr[i]);
+
+    printf("\nOrder: ");
+    for (i = 0; i < k; i++) printf("%d ", atr[i]);
+    printf("\nTotal movement: %d\n", sum);
+    return 0;
+}
+
+Logic: Sort all tracks. From head, go RIGHT to the end, then jump to 0 and sweep right again (no service on return). Circular — no reversal.
+
+4. Non-Restoring Division
+c
+#include <stdio.h>
+
+void leftShift(int *A, int *Q, int n) {
+    *A = ((*A << 1) | ((*Q >> (n-1)) & 1)) & ((1 << n) - 1);
+    *Q = (*Q << 1) & ((1 << n) - 1);
+}
+
+int main() {
+    int A = 0, Q, M, n, i;
+
+    printf("Enter Dividend: ");  scanf("%d", &Q);
+    printf("Enter Divisor: ");   scanf("%d", &M);
+    printf("Enter bits: ");      scanf("%d", &n);
+
+    printf("\nA=%d Q=%d M=%d\n", A, Q, M);
+
+    for (i = 0; i < n; i++) {
+        leftShift(&A, &Q, n);
+
+        if ((A >> (n-1)) == 0)  // A positive
+            A = A - M;
+        else                     // A negative
+            A = A + M;
+
+        if ((A >> (n-1)) == 0)  // A positive → Q0 = 1
+            Q = Q | 1;
+        else                     // A negative → Q0 = 0
+            Q = Q & (~1);
+
+        printf("Step %d: A=%d Q=%d\n", i+1, A, Q);
+    }
+
+    // Final correction
+    if ((A >> (n-1)) == 1) {
+        A = A + M;
+        printf("Final correction: A=%d\n", A);
+    }
+
+    printf("\nQuotient = %d\n", Q);
+    printf("Remainder = %d\n", A);
+    return 0;
+}
