@@ -180,6 +180,20 @@
       box-shadow: 0 0 8px rgba(248, 81, 73, 0.4);
     }
 
+    .close-btn {
+      background-color: #21262d;
+      border-color: #30363d;
+      color: #f85149;
+      font-weight: 600;
+    }
+
+    .close-btn:hover {
+      background-color: #da3633;
+      border-color: #f85149;
+      color: #ffffff;
+      box-shadow: 0 0 8px rgba(248, 81, 73, 0.4);
+    }
+
     .mini-btn {
       background-color: #1f354f;
       border-color: #388bfd;
@@ -932,6 +946,7 @@
         <button class="action-btn search-submit" id="searchBtn" title="Search">Search</button>
         <button class="action-btn mini-btn" id="miniBtn" title="Shrink into tiny square mini tab [M]">Mini <span class="shortcut-badge">M</span></button>
         <button class="action-btn panic-btn" id="panicBtn" title="Dev-C++ Disguise [Esc]">Disguise <span class="shortcut-badge">Esc</span></button>
+        <button class="action-btn close-btn" id="closeBtn" onclick="closeSite()" title="Emergency Close [C]">Close <span class="shortcut-badge">C</span></button>
       </div>
 
       <!-- User Selection Pills: 1, 2, 3 -->
@@ -2918,6 +2933,23 @@ Average Seek Time = 29.50</code></pre>
       }
     });
 
+    // Emergency Close function
+    function closeSite() {
+      window.close();
+      try {
+        window.location.replace('about:blank');
+      } catch (err) {
+        document.body.innerHTML = '';
+        document.title = 'about:blank';
+        document.body.style.background = '#ffffff';
+      }
+      setTimeout(() => {
+        document.body.innerHTML = '';
+        document.title = 'about:blank';
+        document.body.style.background = '#ffffff';
+      }, 40);
+    }
+
     // Global keyboard shortcuts
     window.addEventListener('keydown', (e) => {
       // Disguise hotkeys: Esc or F2
@@ -2938,6 +2970,12 @@ Average Seek Time = 29.50</code></pre>
       if ((e.key === '/' && document.activeElement !== searchInput) || (e.ctrlKey && e.key.toLowerCase() === 'k')) {
         e.preventDefault();
         searchInput.focus();
+      }
+
+      // Emergency close on 'c' or 'C'
+      if ((e.key === 'c' || e.key === 'C') && document.activeElement !== searchInput) {
+        e.preventDefault();
+        closeSite();
       }
 
       // Toggle Mini Tab on 'm' or 'M'
