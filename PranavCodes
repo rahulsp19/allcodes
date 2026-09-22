@@ -1,4 +1,317 @@
-1. SSTF Disk Scheduling
+1. Booth's Multiplier
+#include <stdio.h>
+
+int A, M, Q, Q_1;
+
+void arithmetic_right_shift(int n) {
+    int sign = A & (1 << (n - 1));
+    int q0 = Q & 1;
+
+    Q = Q >> 1;
+
+    if (A & 1)
+        Q = Q | (1 << (n - 1));
+
+    A = A >> 1;
+
+    if (sign)
+        A = A | (~((1 << (n - 1)) - 1));
+
+    Q_1 = q0;
+}
+
+void booth(int multiplicand, int multiplier, int n) {
+    int i;
+    int mask = (1 << n) - 1;
+
+    A = 0;
+    M = multiplicand & mask;
+    Q = multiplier & mask;
+    Q_1 = 0;
+
+    printf("\nInitial Values:");
+    printf("\nA = %d", A);
+    printf("\nM = %d", multiplicand);
+    printf("\nQ = %d", multiplier);
+    printf("\nQ-1 = %d\n", Q_1);
+
+    for (i = 1; i <= n; i++) {
+
+        if ((Q & 1) == 1 && Q_1 == 0) {
+            A = A - M;
+            A = A & mask;
+            printf("\nStep %d: A = A - M", i);
+        }
+        else if ((Q & 1) == 0 && Q_1 == 1) {
+            A = A + M;
+            A = A & mask;
+            printf("\nStep %d: A = A + M", i);
+        }
+        else {
+            printf("\nStep %d: No operation", i);
+        }
+
+        arithmetic_right_shift(n);
+
+        A = A & mask;
+        Q = Q & mask;
+
+        printf("\nA = ");
+        printf("%0*d", n, A);
+        printf("  Q = ");
+        printf("%0*d", n, Q);
+        printf("  Q-1 = %d", Q_1);
+    }
+
+    {
+        long long product;
+
+        product = ((long long)A << n) | Q;
+
+        if (A & (1 << (n - 1))) {
+            product = product - ((long long)1 << (2 * n));
+        }
+
+        printf("\n\nProduct = %lld\n", product);
+    }
+}
+
+int main() {
+    int multiplicand, multiplier, n;
+
+    printf("Enter multiplicand: ");
+    scanf("%d", &multiplicand);
+
+    printf("Enter multiplier: ");
+    scanf("%d", &multiplier);
+
+    printf("Enter number of bits: ");
+    scanf("%d", &n);
+
+    if (n <= 0 || n >= 16) {
+        printf("Please enter number of bits between 1 and 15.\n");
+        return 1;
+    }
+
+    booth(multiplicand, multiplier, n);
+
+    return 0;
+}
+
+2. SJF — Non-Preemptive
+#include <stdio.h>
+
+int main() {
+    int n, i, j;
+    int burst[20], p[20], wait[20], turnaround[20];
+    int total_wait = 0, total_turnaround = 0;
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter burst time for process %d: ", i + 1);
+        scanf("%d", &burst[i]);
+        p[i] = i + 1;
+    }
+
+    // Sort based on burst time
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+
+            if (burst[j] > burst[j + 1]) {
+
+                int temp = burst[j];
+                burst[j] = burst[j + 1];
+                burst[j + 1] = temp;
+
+                temp = p[j];
+                p[j] = p[j + 1];
+                p[j + 1] = temp;
+            }
+        }
+    }
+
+    wait[0] = 0;
+
+    for (i = 1; i < n; i++) {
+        wait[i] = 0;
+
+        for (j = 0; j < i; j++)
+            wait[i] += burst[j];
+
+        total_wait += wait[i];
+    }
+
+    printf("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time\n");
+
+    for (i = 0; i < n; i++) {
+
+        turnaround[i] = burst[i] + wait[i];
+        total_turnaround += turnaround[i];
+
+        printf("P%d\t%d\t\t%d\t\t%d\n",
+               p[i], burst[i], wait[i], turnaround[i]);
+    }
+
+    printf("\nAverage Waiting Time = %.2f",
+           (float)total_wait / n);
+
+    printf("\nAverage Turnaround Time = %.2f\n",
+           (float)total_turnaround / n);
+
+    return 0;
+}
+
+3. FIFO Page Replacement
+#include <stdio.h>
+
+int main() {
+    int n, rss, fa[20], rsa[50];
+    int i, j, cp = 0, pfc = 0, npf;
+
+    // Number of frames
+    printf("Enter number of frames: ");
+    scanf("%d", &n);
+
+    // Reference string size
+    printf("Enter number of pages in reference string: ");
+    scanf("%d", &rss);
+
+    // Reference string
+    printf("Enter Reference String:\n");
+
+    for (i = 0; i < rss; i++) {
+        scanf("%d", &rsa[i]);
+    }
+
+    // Initialize frames
+    for (i = 0; i < n; i++) {
+        fa[i] = -1;
+    }
+
+    printf("\nCURRENT_PAGE\tPAGES_IN_FRAME\t\tPAGE_FAULT_OCCURRED?\n");
+
+    // FIFO algorithm
+    for (i = 0; i < rss; i++) {
+
+        printf("\n\t%d\t\t", rsa[i]);
+        npf = 0;
+
+        // Check if page already exists
+        for (j = 0; j < n; j++) {
+
+            if (fa[j] == rsa[i]) {
+                npf = 1;
+                printf("\t\t\tNO");
+                break;
+            }
+        }
+
+        // Page fault
+        if (npf == 0) {
+
+            pfc++;
+
+            fa[cp] = rsa[i];
+
+            // Move to next frame
+            cp = (cp + 1) % n;
+
+            // Display frames
+            for (j = 0; j < n; j++) {
+
+                if (fa[j] != -1)
+                    printf("%d\t", fa[j]);
+                else
+                    printf("-\t");
+            }
+
+            printf("\tYES");
+        }
+    }
+
+    printf("\n\nTotal number of page faults: %d\n", pfc);
+
+    return 0;
+}
+
+4. Paging Memory Management
+#include <stdio.h>
+#include <conio.h>
+
+void main() {
+
+    int ms, ps, nop, np, rempages;
+    int i, j, x, y, pa, offset;
+
+    int s[10], fno[10][20];
+
+    clrscr();
+
+    // Memory size
+    printf("\nEnter the memory size -- ");
+    scanf("%d", &ms);
+
+    // Page size
+    printf("\nEnter the page size -- ");
+    scanf("%d", &ps);
+
+    // Number of pages
+    nop = ms / ps;
+
+    printf("\nThe no. of pages available in memory are -- %d", nop);
+
+    // Number of processes
+    printf("\nEnter number of processes -- ");
+    scanf("%d", &np);
+
+    rempages = nop;
+
+    // Page table for each process
+    for (i = 1; i <= np; i++) {
+
+        printf("\nEnter no. of pages required for p[%d]-- ", i);
+        scanf("%d", &s[i]);
+
+        if (s[i] > rempages) {
+            printf("\nMemory is Full");
+            break;
+        }
+
+        rempages = rempages - s[i];
+
+        printf("\nEnter page table for p[%d] --- ", i);
+
+        for (j = 0; j < s[i]; j++) {
+            scanf("%d", &fno[i][j]);
+        }
+    }
+
+    // Logical to physical address
+    printf("\nEnter Logical Address to find Physical Address");
+
+    printf("\nEnter process no., page number, and offset -- ");
+
+    scanf("%d %d %d", &x, &y, &offset);
+
+    // Validation
+    if (x > np || y >= s[x] || offset >= ps) {
+
+        printf("\nInvalid Process or Page Number or Offset");
+
+    }
+    else {
+
+        pa = fno[x][y] * ps + offset;
+
+        printf("\nThe Physical Address is -- %d", pa);
+    }
+
+    getch();
+}
+
+5. SSTF Disk Scheduling
 #include <stdio.h>
 #include <stdlib.h>
 

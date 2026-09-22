@@ -4,7 +4,7 @@ A discreet, ultra-fast, mobile-responsive single-page code viewer built specific
 
 ---
 
-## Included Codes (14 Total)
+## Included Codes (18 Total)
 
 ### 📁 Section 1 (6 Codes)
 1. **Optimal Page Replacement** (C)
@@ -23,8 +23,12 @@ A discreet, ultra-fast, mobile-responsive single-page code viewer built specific
 6. **CRC (Cyclic Redundancy Check)** (Java)
 7. **Checksum** (Java)
 
-### 📁 Section 3 (1 Code)
-1. **SSTF Disk Scheduling** (C)
+### 📁 Section 3 (5 Codes)
+1. **Booth's Multiplier** (C)
+2. **SJF — Non-Preemptive** (C)
+3. **FIFO Page Replacement** (C)
+4. **Paging Memory Management** (C)
+5. **SSTF Disk Scheduling** (C)
 
 ---
 
@@ -36,7 +40,7 @@ A discreet, ultra-fast, mobile-responsive single-page code viewer built specific
 | **`Copy` Button** | **1-Click Copy** | Copies the exact raw code to clipboard with instant visual confirmation. |
 | **Mobile Responsive** | **Touch & Drawer UI** | Auto-adapting mobile layout with off-canvas sidebar drawer, touch-friendly buttons, and horizontal scrollbars. |
 | **`Esc` or `F2`** | **Disguise Screen** | Instantly launches a fullscreen, authentic screenshot of **Dev-C++ 5.16 IDE** editing `fibonacci.cpp`. Click anywhere or press `Esc` to return. |
-| **`M`** | **Mini Square Tab** | Collapses the screen into a tiny floating square box docked in the corner with user switcher, code dropdown, and 1-click copy. |
+| **`M`** | **Mini Square Tab** | Collapses the screen into a tiny floating square box docked in the corner with user switcher (1, 2, 3), code dropdown, and 1-click copy. |
 | **`/` or `Ctrl + K`** | **Focus Search** | Instantly focuses the search bar to filter any code across titles or body text. |
 | **`Ctrl + B`** | **Toggle Sidebar** | Hides or shows the navigation sidebar. |
 
