@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -180,18 +180,16 @@
       box-shadow: 0 0 8px rgba(248, 81, 73, 0.4);
     }
 
-    .close-btn {
-      background-color: #21262d;
-      border-color: #30363d;
-      color: #f85149;
+    .minimize-btn {
+      background-color: #1f354f;
+      border-color: #388bfd;
+      color: #58a6ff;
       font-weight: 600;
     }
 
-    .close-btn:hover {
-      background-color: #da3633;
-      border-color: #f85149;
-      color: #ffffff;
-      box-shadow: 0 0 8px rgba(248, 81, 73, 0.4);
+    .minimize-btn:hover {
+      background-color: #26476d;
+      box-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
     }
 
     .mini-btn {
@@ -675,10 +673,24 @@
       flex-direction: column;
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: height 0.15s ease, width 0.15s ease;
     }
 
     #miniSquareTab.active {
       display: flex;
+    }
+
+    #miniSquareTab.minimized-bar {
+      height: 32px !important;
+      width: 175px !important;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    #miniSquareTab.minimized-bar .mini-toolbar,
+    #miniSquareTab.minimized-bar .mini-body,
+    #miniSquareTab.minimized-bar .mini-user-btn {
+      display: none !important;
     }
 
     .mini-header {
@@ -688,6 +700,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #30363d;
+      user-select: none;
     }
 
     .mini-title {
@@ -701,6 +714,26 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    .mini-ctrl-btn {
+      background: none;
+      border: none;
+      color: #8b949e;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 6px;
+      font-weight: bold;
+      font-size: 13px;
+      line-height: 1;
+      border-radius: 4px;
+    }
+
+    .mini-ctrl-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .mini-user-btn {
@@ -903,14 +936,15 @@
 
   <!-- Mini Square Tab (Floating Widget Mode for Lab Exam) -->
   <div id="miniSquareTab">
-    <div class="mini-header">
+    <div class="mini-header" onclick="handleMiniHeaderClick(event)">
       <span class="mini-title">mini.c</span>
       <div class="mini-controls">
         <button class="mini-user-btn active" data-user="1">1</button>
         <button class="mini-user-btn" data-user="2">2</button>
         <button class="mini-user-btn" data-user="3">3</button>
-        <button class="mini-expand-btn" onclick="toggleMiniMode()" title="Expand to full window [M]">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+        <button class="mini-ctrl-btn" onclick="toggleMiniBar(event)" title="Minimize [-]">&minus;</button>
+        <button class="mini-ctrl-btn" onclick="expandToFull(event)" title="Expand to full window [M]">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
             <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM10.5.5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 15.5 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 10.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 1 14.5 16h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
           </svg>
         </button>
@@ -941,12 +975,11 @@
             <path d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 10-1.06 1.06l3.04 3.04a.75.75 0 101.06-1.06l-3.04-3.04z"></path>
           </svg>
           <input type="text" id="searchInput" placeholder="Search code, algorithm or keyword... (/)" autocomplete="off" spellcheck="false">
-          <button class="clear-btn" id="clearBtn" title="Clear">âœ•</button>
+          <button class="clear-btn" id="clearBtn" title="Clear">&times;</button>
         </div>
         <button class="action-btn search-submit" id="searchBtn" title="Search">Search</button>
-        <button class="action-btn mini-btn" id="miniBtn" title="Shrink into tiny square mini tab [M]">Mini <span class="shortcut-badge">M</span></button>
+        <button class="action-btn minimize-btn" id="minimizeBtn" onclick="toggleMinimize()" title="Minimize to tiny tab [C or -]"><span>&minus;</span> Minimize <span class="shortcut-badge">C</span></button>
         <button class="action-btn panic-btn" id="panicBtn" title="Dev-C++ Disguise [Esc]">Disguise <span class="shortcut-badge">Esc</span></button>
-        <button class="action-btn close-btn" id="closeBtn" onclick="closeSite()" title="Emergency Close [C]">Close <span class="shortcut-badge">C</span></button>
       </div>
 
       <!-- User Selection Pills: 1, 2, 3 -->
@@ -2847,19 +2880,43 @@ Average Seek Time = 29.50</code></pre>
       }
     }
 
-    function toggleMiniMode() {
+    function toggleMinimize() {
       const isMiniActive = miniSquareTab.classList.contains('active');
-      if (isMiniActive) {
-        miniSquareTab.classList.remove('active');
-        miniBtn.classList.remove('active');
-      } else {
+      if (!isMiniActive) {
         updateMiniContent();
+        miniSquareTab.classList.remove('minimized-bar');
         miniSquareTab.classList.add('active');
-        miniBtn.classList.add('active');
+      } else {
+        if (miniSquareTab.classList.contains('minimized-bar')) {
+          miniSquareTab.classList.remove('minimized-bar');
+        } else {
+          miniSquareTab.classList.add('minimized-bar');
+        }
       }
     }
 
-    miniBtn.addEventListener('click', toggleMiniMode);
+    function toggleMiniBar(e) {
+      if (e) e.stopPropagation();
+      miniSquareTab.classList.toggle('minimized-bar');
+    }
+
+    function handleMiniHeaderClick(e) {
+      if (miniSquareTab.classList.contains('minimized-bar')) {
+        miniSquareTab.classList.remove('minimized-bar');
+      }
+    }
+
+    function expandToFull(e) {
+      if (e) e.stopPropagation();
+      miniSquareTab.classList.remove('active');
+      miniSquareTab.classList.remove('minimized-bar');
+    }
+
+    function toggleMiniMode() {
+      toggleMinimize();
+    }
+
+    if (miniBtn) miniBtn.addEventListener('click', toggleMinimize);
 
     miniSelect.addEventListener('change', (e) => {
       showMiniCode(e.target.value);
@@ -2933,23 +2990,6 @@ Average Seek Time = 29.50</code></pre>
       }
     });
 
-    // Emergency Close function
-    function closeSite() {
-      window.close();
-      try {
-        window.location.replace('about:blank');
-      } catch (err) {
-        document.body.innerHTML = '';
-        document.title = 'about:blank';
-        document.body.style.background = '#ffffff';
-      }
-      setTimeout(() => {
-        document.body.innerHTML = '';
-        document.title = 'about:blank';
-        document.body.style.background = '#ffffff';
-      }, 40);
-    }
-
     // Global keyboard shortcuts
     window.addEventListener('keydown', (e) => {
       // Disguise hotkeys: Esc or F2
@@ -2972,16 +3012,23 @@ Average Seek Time = 29.50</code></pre>
         searchInput.focus();
       }
 
-      // Emergency close on 'c' or 'C'
-      if ((e.key === 'c' || e.key === 'C') && document.activeElement !== searchInput) {
+      // Minimize on 'c', 'C', or '-'
+      if ((e.key === 'c' || e.key === 'C' || e.key === '-') && document.activeElement !== searchInput) {
         e.preventDefault();
-        closeSite();
+        if (disguiseOverlay.classList.contains('active')) {
+          exitDisguise();
+        }
+        toggleMinimize();
       }
 
-      // Toggle Mini Tab on 'm' or 'M'
+      // Restore full view on 'm' or 'M'
       if ((e.key === 'm' || e.key === 'M') && document.activeElement !== searchInput) {
         e.preventDefault();
-        toggleMiniMode();
+        if (miniSquareTab.classList.contains('active')) {
+          expandToFull();
+        } else {
+          toggleMinimize();
+        }
       }
 
       // Toggle Sidebar on 'Ctrl+B'
