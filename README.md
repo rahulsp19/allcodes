@@ -38,6 +38,7 @@ A discreet, ultra-fast, mobile-responsive single-page code viewer built specific
 |---|---|---|
 | **`Ex Output` Button** | **Sample I/O Viewer** | Toggles a clean, collapsible sample input & output box beneath any code card with 1-click copy. |
 | **`Copy` Button** | **1-Click Copy** | Copies the exact raw code to clipboard with instant visual confirmation. |
+| **`White` Button / `W`** | **White / Dark Layout** | Toggles between dark mode and clean white layout with 1 click or 'W' shortcut. |
 | **`C` or `-`** | **Minimize (`—`)** | Collapses the screen into a tiny floating square box docked in the corner, or shrinks it into a discreet 1-line bar. |
 | **`Esc` or `F2`** | **Disguise Screen** | Instantly launches a fullscreen, authentic screenshot of **Dev-C++ 5.16 IDE** editing `fibonacci.cpp`. Click anywhere or press `Esc` to return. |
 | **`M`** | **Mini Tab / Restore** | Toggles the floating corner widget or restores full window mode. |
