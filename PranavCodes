@@ -1,0 +1,65 @@
+1. SSTF Disk Scheduling
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    int queue[100], visited[100];
+    int n, i, j, head;
+    int pos, min, diff;
+    int seek = 0;
+    float avg;
+
+    printf("*** SSTF Disk Scheduling Algorithm ***\n");
+
+    printf("Enter the size of the queue: ");
+    scanf("%d", &n);
+
+    printf("Enter the queue (track numbers):\n");
+
+    for (i = 0; i < n; i++) {
+        scanf("%d", &queue[i]);
+        visited[i] = 0;
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    printf("\nOrder of head movement:\n");
+
+    for (i = 0; i < n; i++) {
+
+        min = 100000;
+        pos = -1;
+
+        // Find closest unvisited request
+        for (j = 0; j < n; j++) {
+
+            if (!visited[j]) {
+
+                diff = abs(queue[j] - head);
+
+                if (diff < min) {
+                    min = diff;
+                    pos = j;
+                }
+            }
+        }
+
+        // Process closest request
+        visited[pos] = 1;
+
+        seek += abs(queue[pos] - head);
+
+        head = queue[pos];
+
+        printf("%d ", head);
+    }
+
+    avg = (float)seek / n;
+
+    printf("\n\nTotal Seek Time = %d", seek);
+    printf("\nAverage Seek Time = %.2f\n", avg);
+
+    return 0;
+}
