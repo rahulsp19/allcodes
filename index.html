@@ -984,8 +984,8 @@
 
       <!-- User Selection Pills: 1, 2, 3 -->
       <div class="user-tabs" id="userTabs">
-        <button class="user-tab active" data-user="all">All (24)</button>
-        <button class="user-tab" data-user="1">1 (9)</button>
+        <button class="user-tab active" data-user="all">All (25)</button>
+        <button class="user-tab" data-user="1">1 (10)</button>
         <button class="user-tab" data-user="2">2 (10)</button>
         <button class="user-tab" data-user="3">3 (5)</button>
       </div>
@@ -1001,7 +1001,7 @@
       <div class="sidebar-section">
         <div class="section-header u1" onclick="selectUser('1')">
           <span>1</span>
-          <span class="user-badge">9</span>
+          <span class="user-badge">10</span>
         </div>
         <ul class="sidebar-list">
           <li class="sidebar-item" onclick="jumpToCode('u1-code-1')">1. Optimal Page</li>
@@ -1013,6 +1013,7 @@
           <li class="sidebar-item" onclick="jumpToCode('u1-code-7')">7. Tuple - Manipulation &amp; Slicing</li>
           <li class="sidebar-item" onclick="jumpToCode('u1-code-8')">8. Basic Statistical Methods</li>
           <li class="sidebar-item" onclick="jumpToCode('u1-code-9')">9. Stock Market Data</li>
+          <li class="sidebar-item" onclick="jumpToCode('u1-code-10')">10. Stock Market Data (Alt)</li>
         </ul>
       </div>
 
@@ -1819,6 +1820,59 @@ plt.tight_layout()
 plt.show()
 
 print("Analysis Complete!")</code></pre>
+      </article>
+
+      <!-- 1.10. Stock Market Data Analysis (Alt) -->
+      <article class="code-card" id="u1-code-10" data-user="1" data-name="1 rahul stock market data analysis alternative ds codes data science python yfinance matplotlib">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u1">1</span>
+            <span class="code-title">10. Stock Market Data Analysis (Alt)</span>
+          </div>
+          <div class="card-actions">
+            <button class="copy-btn" onclick="copyCode(this, 'raw-u1-10')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path>
+                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </header>
+        <pre><code id="raw-u1-10">!pip install yfinance
+
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+# Download data
+tcs = yf.download("TCS.NS", period="3mo")
+infy = yf.download("INFY.NS", period="3mo")
+
+# Plot 1: TCS Closing Price
+tcs['Close'].plot(title="TCS Closing Prices")
+plt.show()
+
+# Plot 2: INFY Closing Price
+infy['Close'].plot(title="INFY Closing Prices")
+plt.show()
+
+# Plot 3: Compare both (Normalized)
+(tcs['Close'] / tcs['Close'].iloc[0] * 100).plot(label='TCS')
+(infy['Close'] / infy['Close'].iloc[0] * 100).plot(label='INFY')
+plt.title("Normalized Performance")
+plt.legend()
+plt.show()
+
+# Plot 4: Daily Return
+tcs['Close'].pct_change().plot(title="TCS Daily Return")
+plt.show()
+
+# Plot 5: EMA
+tcs['EMA20'] = tcs['Close'].ewm(span=20, adjust=False).mean()
+tcs[['Close', 'EMA20']].plot(title="TCS with EMA20")
+plt.show()
+
+print("Done!")</code></pre>
       </article>
 
 
@@ -3031,7 +3085,8 @@ Average Seek Time = 29.50</code></pre>
         { id: '1-6', name: '6. Hamming Distance & Code', code: document.getElementById('raw-u1-6') ? document.getElementById('raw-u1-6').textContent : '' },
         { id: '1-7', name: '7. Tuple — Manipulation & Slicing', code: document.getElementById('raw-u1-7') ? document.getElementById('raw-u1-7').textContent : '' },
         { id: '1-8', name: '8. Basic Statistical Methods', code: document.getElementById('raw-u1-8') ? document.getElementById('raw-u1-8').textContent : '' },
-        { id: '1-9', name: '9. Stock Market Data Analysis', code: document.getElementById('raw-u1-9') ? document.getElementById('raw-u1-9').textContent : '' }
+        { id: '1-9', name: '9. Stock Market Data Analysis', code: document.getElementById('raw-u1-9') ? document.getElementById('raw-u1-9').textContent : '' },
+        { id: '1-10', name: '10. Stock Market Data Analysis (Alt)', code: document.getElementById('raw-u1-10') ? document.getElementById('raw-u1-10').textContent : '' }
       ],
       '2': [
         { id: '2-1', name: '1. SJF CPU Scheduling', code: document.getElementById('raw-u2-1') ? document.getElementById('raw-u2-1').textContent : '' },
