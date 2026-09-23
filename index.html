@@ -984,9 +984,9 @@
 
       <!-- User Selection Pills: 1, 2, 3 -->
       <div class="user-tabs" id="userTabs">
-        <button class="user-tab active" data-user="all">All (18)</button>
-        <button class="user-tab" data-user="1">1 (6)</button>
-        <button class="user-tab" data-user="2">2 (7)</button>
+        <button class="user-tab active" data-user="all">All (24)</button>
+        <button class="user-tab" data-user="1">1 (9)</button>
+        <button class="user-tab" data-user="2">2 (10)</button>
         <button class="user-tab" data-user="3">3 (5)</button>
       </div>
     </div>
@@ -1001,7 +1001,7 @@
       <div class="sidebar-section">
         <div class="section-header u1" onclick="selectUser('1')">
           <span>1</span>
-          <span class="user-badge">6</span>
+          <span class="user-badge">9</span>
         </div>
         <ul class="sidebar-list">
           <li class="sidebar-item" onclick="jumpToCode('u1-code-1')">1. Optimal Page</li>
@@ -1010,6 +1010,9 @@
           <li class="sidebar-item" onclick="jumpToCode('u1-code-4')">4. C-SCAN Disk</li>
           <li class="sidebar-item" onclick="jumpToCode('u1-code-5')">5. Non-Restoring Div</li>
           <li class="sidebar-item" onclick="jumpToCode('u1-code-6')">6. Hamming Code</li>
+          <li class="sidebar-item" onclick="jumpToCode('u1-code-7')">7. Tuple - Manipulation &amp; Slicing</li>
+          <li class="sidebar-item" onclick="jumpToCode('u1-code-8')">8. Basic Statistical Methods</li>
+          <li class="sidebar-item" onclick="jumpToCode('u1-code-9')">9. Stock Market Data</li>
         </ul>
       </div>
 
@@ -1017,7 +1020,7 @@
       <div class="sidebar-section">
         <div class="section-header u2" onclick="selectUser('2')">
           <span>2</span>
-          <span class="user-badge">7</span>
+          <span class="user-badge">10</span>
         </div>
         <ul class="sidebar-list">
           <li class="sidebar-item" onclick="jumpToCode('u2-code-1')">1. SJF CPU</li>
@@ -1027,6 +1030,9 @@
           <li class="sidebar-item" onclick="jumpToCode('u2-code-5')">5. Restoring Div</li>
           <li class="sidebar-item" onclick="jumpToCode('u2-code-6')">6. CRC</li>
           <li class="sidebar-item" onclick="jumpToCode('u2-code-7')">7. Checksum</li>
+          <li class="sidebar-item" onclick="jumpToCode('u2-code-8')">8. List &amp; Matrix Addition</li>
+          <li class="sidebar-item" onclick="jumpToCode('u2-code-9')">9. Pandas Import/Export</li>
+          <li class="sidebar-item" onclick="jumpToCode('u2-code-10')">10. Bar Plot Error Bars</li>
         </ul>
       </div>
 
@@ -1622,6 +1628,197 @@ Hamming Code: 0 1 1 0 0 1 1
 Error at position: 4
 Corrected Code: 0 1 1 0 0 1 1</code></pre>
         </div>
+      </article>
+
+      <!-- 1.7. Tuple — Manipulation & Slicing -->
+      <article class="code-card" id="u1-code-7" data-user="1" data-name="1 rahul tuple manipulation slicing data science python ds codes">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u1">1</span>
+            <span class="code-title">7. Tuple — Manipulation &amp; Slicing</span>
+          </div>
+          <div class="card-actions">
+            <button class="copy-btn" onclick="copyCode(this, 'raw-u1-7')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path>
+                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </header>
+        <pre><code id="raw-u1-7"># ============================================================
+# TUPLE - 2 Manipulation Functions + 2 Slicing Operations
+# ============================================================
+
+# Create a tuple
+t = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+print("Original Tuple:", t)
+
+# --- MANIPULATION FUNCTION 1: count() ---
+# count() returns how many times a value appears
+print("\n--- count() ---")
+t2 = (10, 20, 10, 30, 10, 40)
+print("Tuple:", t2)
+print("Count of 10:", t2.count(10))   # Output: 3
+
+# --- MANIPULATION FUNCTION 2: index() ---
+# index() returns the position of first occurrence of a value
+print("\n--- index() ---")
+print("Tuple:", t)
+print("Index of 50:", t.index(50))    # Output: 4
+
+# --- SLICING 1: Basic slice [start:stop] ---
+print("\n--- Slice [2:6] ---")
+print("Elements from index 2 to 5:", t[2:6])   # (30, 40, 50, 60)
+
+# --- SLICING 2: Step slice [::step] and reverse [::-1] ---
+print("\n--- Slice [::2] (every 2nd element) ---")
+print("Every 2nd element:", t[::2])             # (10, 30, 50, 70, 90)
+
+print("\n--- Slice [::-1] (reverse) ---")
+print("Reversed tuple:", t[::-1])               # (100, 90, ..., 10)</code></pre>
+      </article>
+
+      <!-- 1.8. Basic Statistical Methods -->
+      <article class="code-card" id="u1-code-8" data-user="1" data-name="1 rahul basic statistical methods ds codes data science python statistics">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u1">1</span>
+            <span class="code-title">8. Basic Statistical Methods</span>
+          </div>
+          <div class="card-actions">
+            <button class="copy-btn" onclick="copyCode(this, 'raw-u1-8')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path>
+                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </header>
+        <pre><code id="raw-u1-8"># ============================================================
+# STATISTICAL METHODS ON SAMPLE DATASET
+# ============================================================
+
+import statistics
+
+# Dataset from your lab record
+data = (10, 20, 30, 40, 45, 55, 63, 79, 82, 25, 10, 76)
+
+print("Dataset:", data)
+print()
+
+# Mean - average of all values
+mean_val = statistics.mean(data)
+print("Mean              =", mean_val)
+
+# Median - middle value when sorted
+median_val = statistics.median(data)
+print("Median            =", median_val)
+
+# Variance - how spread out the values are
+variance_val = statistics.variance(data)
+print("Variance          =", variance_val)
+
+# Standard Deviation - square root of variance
+std_val = statistics.stdev(data)
+print("Standard Deviation=", std_val)
+
+# Min and Max
+print("Minimum           =", min(data))
+print("Maximum           =", max(data))</code></pre>
+      </article>
+
+      <!-- 1.9. Stock Market Data Analysis -->
+      <article class="code-card" id="u1-code-9" data-user="1" data-name="1 rahul stock market data analysis ds codes data science python yfinance matplotlib">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u1">1</span>
+            <span class="code-title">9. Stock Market Data Analysis</span>
+          </div>
+          <div class="card-actions">
+            <button class="copy-btn" onclick="copyCode(this, 'raw-u1-9')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path>
+                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </header>
+        <pre><code id="raw-u1-9"># ============================================================
+# STOCK MARKET DATA ANALYSIS
+# Run this cell first to install yfinance if needed:
+# !pip install yfinance
+# ============================================================
+
+import yfinance as yf
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# ---- PART 1: Download &amp; Plot TCS Closing Prices ----
+print("Downloading TCS data...")
+tcs = yf.download("TCS.NS", period="3mo")
+
+plt.figure(figsize=(10, 4))
+plt.plot(tcs.index, tcs['Close'], label='TCS Close', color='blue')
+plt.title("TCS Closing Prices (Last 3 Months)")
+plt.xlabel("Date")
+plt.ylabel("Price (₹)")
+plt.grid(True, alpha=0.4)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# ---- PART 2: Compare TCS vs INFY (Normalized) ----
+print("Downloading INFY data...")
+infy = yf.download("INFY.NS", period="3mo")
+
+plt.figure(figsize=(10, 5))
+plt.plot(tcs['Close'] / tcs['Close'].iloc[0] * 100, label='TCS')
+plt.plot(infy['Close'] / infy['Close'].iloc[0] * 100, label='INFY')
+plt.title("Normalized Performance (Index 100 = Start)")
+plt.xlabel("Date")
+plt.ylabel("Index (100 = Start)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+# ---- PART 3: Daily Return (Volatility) ----
+daily_return = tcs['Close'].pct_change()
+
+plt.figure(figsize=(10, 4))
+plt.plot(tcs.index, daily_return, color='orange', label='Daily Return')
+plt.title("TCS Daily Return")
+plt.xlabel("Date")
+plt.ylabel("Return")
+plt.axhline(0, color='black', linewidth=0.8)
+plt.grid(True, alpha=0.4)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# ---- PART 4: Exponential Moving Average (EMA) ----
+tcs['EMA20'] = tcs['Close'].ewm(span=20, adjust=False).mean()
+
+plt.figure(figsize=(12, 6))
+plt.plot(tcs.index, tcs['Close'], label='Close Price', linewidth=2)
+plt.plot(tcs.index, tcs['EMA20'], label='EMA20', linewidth=2, color='orange')
+plt.title("TCS - 20 Day Exponential Moving Average")
+plt.xlabel("Date")
+plt.ylabel("Price (₹)")
+
+ax = plt.gca()
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%b'))
+plt.xticks(rotation=45)
+plt.grid(True, alpha=0.4)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+print("Analysis Complete!")</code></pre>
       </article>
 
 
@@ -2831,7 +3028,10 @@ Average Seek Time = 29.50</code></pre>
         { id: '1-3', name: "3. Banker's Algorithm", code: document.getElementById('raw-u1-3') ? document.getElementById('raw-u1-3').textContent : '' },
         { id: '1-4', name: '4. C-SCAN Disk Scheduling', code: document.getElementById('raw-u1-4') ? document.getElementById('raw-u1-4').textContent : '' },
         { id: '1-5', name: '5. Non-Restoring Division', code: document.getElementById('raw-u1-5') ? document.getElementById('raw-u1-5').textContent : '' },
-        { id: '1-6', name: '6. Hamming Distance & Code', code: document.getElementById('raw-u1-6') ? document.getElementById('raw-u1-6').textContent : '' }
+        { id: '1-6', name: '6. Hamming Distance & Code', code: document.getElementById('raw-u1-6') ? document.getElementById('raw-u1-6').textContent : '' },
+        { id: '1-7', name: '7. Tuple — Manipulation & Slicing', code: document.getElementById('raw-u1-7') ? document.getElementById('raw-u1-7').textContent : '' },
+        { id: '1-8', name: '8. Basic Statistical Methods', code: document.getElementById('raw-u1-8') ? document.getElementById('raw-u1-8').textContent : '' },
+        { id: '1-9', name: '9. Stock Market Data Analysis', code: document.getElementById('raw-u1-9') ? document.getElementById('raw-u1-9').textContent : '' }
       ],
       '2': [
         { id: '2-1', name: '1. SJF CPU Scheduling', code: document.getElementById('raw-u2-1') ? document.getElementById('raw-u2-1').textContent : '' },
@@ -2840,7 +3040,10 @@ Average Seek Time = 29.50</code></pre>
         { id: '2-4', name: '4. SSTF Disk Scheduling', code: document.getElementById('raw-u2-4') ? document.getElementById('raw-u2-4').textContent : '' },
         { id: '2-5', name: '5. Restoring Division', code: document.getElementById('raw-u2-5') ? document.getElementById('raw-u2-5').textContent : '' },
         { id: '2-6', name: '6. CRC (Short Java)', code: document.getElementById('raw-u2-6') ? document.getElementById('raw-u2-6').textContent : '' },
-        { id: '2-7', name: '7. Checksum (Short Java)', code: document.getElementById('raw-u2-7') ? document.getElementById('raw-u2-7').textContent : '' }
+        { id: '2-7', name: '7. Checksum (Short Java)', code: document.getElementById('raw-u2-7') ? document.getElementById('raw-u2-7').textContent : '' },
+        { id: '2-8', name: '8. List & Matrix Addition', code: document.getElementById('raw-u2-8') ? document.getElementById('raw-u2-8').textContent : '' },
+        { id: '2-9', name: '9. Pandas Import/Export', code: document.getElementById('raw-u2-9') ? document.getElementById('raw-u2-9').textContent : '' },
+        { id: '2-10', name: '10. Bar Plot Error Bars', code: document.getElementById('raw-u2-10') ? document.getElementById('raw-u2-10').textContent : '' }
       ],
       '3': [
         { id: '3-1', name: "1. Booth's Multiplier", code: document.getElementById('raw-u3-1') ? document.getElementById('raw-u3-1').textContent : '' },
