@@ -1331,10 +1331,10 @@
 
       <!-- User Selection Pills: 1, 2, 3 -->
       <div class="user-tabs" id="userTabs">
-        <button class="user-tab active" data-user="all">All (18)</button>
+        <button class="user-tab active" data-user="all">All (19)</button>
         <button class="user-tab" data-user="1">1 (6)</button>
         <button class="user-tab" data-user="2">2 (7)</button>
-        <button class="user-tab" data-user="3">3 (5)</button>
+        <button class="user-tab" data-user="3">3 (6)</button>
       </div>
     </div>
   </header>
@@ -1377,11 +1377,11 @@
         </ul>
       </div>
 
-      <!-- Section 3 (5 codes) -->
+      <!-- Section 3 (6 codes) -->
       <div class="sidebar-section">
         <div class="section-header u3" onclick="selectUser('3')">
           <span>3</span>
-          <span class="user-badge">5</span>
+          <span class="user-badge">6</span>
         </div>
         <ul class="sidebar-list">
           <li class="sidebar-item" onclick="jumpToCode('u3-code-1')">1. Booth's Multiplier</li>
@@ -1389,6 +1389,7 @@
           <li class="sidebar-item" onclick="jumpToCode('u3-code-3')">3. FIFO Page</li>
           <li class="sidebar-item" onclick="jumpToCode('u3-code-4')">4. Paging</li>
           <li class="sidebar-item" onclick="jumpToCode('u3-code-5')">5. SSTF Disk</li>
+          <li class="sidebar-item" onclick="jumpToCode('u3-code-6')">6. Bar Plot Error Bars</li>
         </ul>
       </div>
     </aside>
@@ -2970,6 +2971,70 @@ Average Seek Time = 29.50</code></pre>
         </div>
       </article>
 
+      <!-- 3.6. Bar Plot with Error Bars -->
+      <article class="code-card" id="u3-code-6" data-user="3" data-name="3 pranav python matplotlib bar plot error bars categories means errors yerr capsize">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u3">3</span>
+            <span class="code-title">6. Bar Plot with Error Bars</span>
+          </div>
+          <div class="card-actions">
+            <button class="ex-btn" onclick="toggleEx(this, 'ex-u3-6')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75zm1.5 0v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25zM4 5.5a.75.75 0 0 1 .75-.75h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 4 5.5zm0 3a.75.75 0 0 1 .75-.75h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 4 8.5zm0 3a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75z"/>
+              </svg>
+              <span>Ex Output</span>
+            </button>
+            <button class="copy-btn" onclick="copyCode(this, 'raw-u3-6')">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path>
+                <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </header>
+        <pre><code id="raw-u3-6">import matplotlib.pyplot as plt
+
+# Sample data
+categories = ['Group A', 'Group B', 'Group C', 'Group D']
+means = [25, 40, 30, 55]
+errors = [2.5, 4.0, 3.2, 5.1]
+
+# Create the figure and axis objects
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Generate the bar plot with error bars (yerr) and caps on the error lines (capsize)
+bars = ax.bar(categories, means, yerr=errors, capsize=5, 
+              color='lightblue', edgecolor='black')
+
+# Attach text labels above each bar
+# padding=5 ensures the label clears the top of the error bar
+ax.bar_label(bars, padding=5, fmt='%.1f')
+
+# Format the chart
+ax.set_xlabel('Categories')
+ax.set_ylabel('Values')
+ax.set_title('Sample Data: Bar Plot with Error Bars')
+
+# Adjust layout to prevent clipping of the top labels
+plt.ylim(0, 65) 
+plt.tight_layout()
+
+# Render the plot
+plt.show()</code></pre>
+        <div class="ex-panel" id="ex-u3-6">
+          <div class="ex-top">
+            <span class="ex-badge">Sample Output</span>
+            <button class="ex-copy-btn" onclick="copySnippet(this, 'ex-raw-u3-6')">Copy</button>
+          </div>
+          <pre class="ex-pre"><code id="ex-raw-u3-6">Output:
+Window displays a bar plot titled &quot;Sample Data: Bar Plot with Error Bars&quot;
+Bars for Group A (25.0), Group B (40.0), Group C (30.0), Group D (55.0)
+Black error bars with caps and formatted numeric labels above each bar.</code></pre>
+        </div>
+      </article>
+
       <div class="no-results" id="noResults">
         No matching code found. Press Esc or click "All" to reset.
       </div>
@@ -3194,7 +3259,8 @@ Average Seek Time = 29.50</code></pre>
         { id: '3-2', name: '2. SJF (Non-Preemptive)', code: document.getElementById('raw-u3-2') ? document.getElementById('raw-u3-2').textContent : '' },
         { id: '3-3', name: '3. FIFO Page Replacement', code: document.getElementById('raw-u3-3') ? document.getElementById('raw-u3-3').textContent : '' },
         { id: '3-4', name: '4. Paging Memory Management', code: document.getElementById('raw-u3-4') ? document.getElementById('raw-u3-4').textContent : '' },
-        { id: '3-5', name: '5. SSTF Disk Scheduling', code: document.getElementById('raw-u3-5') ? document.getElementById('raw-u3-5').textContent : '' }
+        { id: '3-5', name: '5. SSTF Disk Scheduling', code: document.getElementById('raw-u3-5') ? document.getElementById('raw-u3-5').textContent : '' },
+        { id: '3-6', name: '6. Bar Plot with Error Bars', code: document.getElementById('raw-u3-6') ? document.getElementById('raw-u3-6').textContent : '' }
       ]
     };
 
