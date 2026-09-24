@@ -133,3 +133,84 @@ class Checksum{
   System.out.println("Checksum="+(~sum&255));
  }
 }
+
+8. Bar Plot Error
+import matplotlib.pyplot as plt
+
+# Sample data
+categories = ['Group A', 'Group B', 'Group C', 'Group D']
+means = [25, 40, 30, 55]
+errors = [2.5, 4.0, 3.2, 5.1]
+
+# Create the figure and axis objects
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Generate the bar plot with error bars (yerr) and caps on the error lines (capsize)
+bars = ax.bar(categories, means, yerr=errors, capsize=5, 
+              color='lightblue', edgecolor='black')
+
+# Attach text labels above each bar
+# padding=5 ensures the label clears the top of the error bar
+ax.bar_label(bars, padding=5, fmt='%.1f')
+
+# Format the chart
+ax.set_xlabel('Categories')
+ax.set_ylabel('Values')
+ax.set_title('Sample Data: Bar Plot with Error Bars')
+
+# Adjust layout to prevent clipping of the top labels
+plt.ylim(0, 65) 
+plt.tight_layout()
+
+# Render the plot
+plt.show()
+
+9. Import and Export data
+import csv
+
+data_to_export = [
+    ['Name', 'Age', 'Department'],
+    ['Alice', 28, 'Engineering'],
+    ['Bob', 34, 'Marketing'],
+    ['Charlie', 25, 'Design']
+]
+
+filename = 'employee_data.csv'
+
+with open(filename, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data_to_export)
+print(f"Data successfully exported to '{filename}'\n")
+
+imported_data = []
+
+with open(filename, mode='r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        imported_data.append(row)
+
+print("Data imported from file:")
+for row in imported_data:
+    print(row)
+
+10. Matrix
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+
+new_list = []
+new_list.extend(list1)
+new_list.extend(list2)
+print("Combined List:", new_list)
+
+matrix_A = [list1, list2]
+print("\nMatrix A:", matrix_A)
+
+matrix_B = [[6, 5, 4],
+            [3, 2, 1]]
+
+result_matrix = [[matrix_A[i][j] + matrix_B[i][j] for j in range(len(matrix_A[0]))]
+                 for i in range(len(matrix_A))]
+
+print("\nResult of Matrix Addition (A + B):")
+for row in result_matrix:
+    print(row)
