@@ -1397,6 +1397,7 @@
           <li class="sidebar-item" onclick="jumpToCode('u3-code-4')">4. Paging</li>
           <li class="sidebar-item" onclick="jumpToCode('u3-code-5')">5. SSTF Disk</li>
           <li class="sidebar-item" onclick="jumpToCode('u3-code-6')">6. Bar Plot Error Bars</li>
+          <li class="sidebar-item" onclick="jumpToCode('u3-code-7')">7. Matrix</li>
         </ul>
       </div>
     </aside>
@@ -3286,6 +3287,39 @@ Black error bars with caps and formatted numeric labels above each bar.</code></
         </div>
       </article>
 
+      <!-- 3.7. Matrix -->
+      <article class="code-card" id="u3-code-7" data-user="3" data-name="3 pranav matrix python list combined addition result">
+        <header class="code-header">
+          <div class="code-title-wrap">
+            <span class="author-tag u3">3</span>
+            <span class="code-title">7. Matrix</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn" onclick="copyCode('raw-u3-7', this)">Copy</button>
+          </div>
+        </header>
+        <pre><code id="raw-u3-7" class="language-python">list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+
+new_list = []
+new_list.extend(list1)
+new_list.extend(list2)
+print("Combined List:", new_list)
+
+matrix_A = [list1, list2]
+print("\nMatrix A:", matrix_A)
+
+matrix_B = [[6, 5, 4],
+            [3, 2, 1]]
+
+result_matrix = [[matrix_A[i][j] + matrix_B[i][j] for j in range(len(matrix_A[0]))]
+                 for i in range(len(matrix_A))]
+
+print("\nResult of Matrix Addition (A + B):")
+for row in result_matrix:
+    print(row)</code></pre>
+      </article>
+
       <div class="no-results" id="noResults">
         No matching code found. Press Esc or click "All" to reset.
       </div>
@@ -3518,7 +3552,8 @@ Black error bars with caps and formatted numeric labels above each bar.</code></
         { id: '3-3', name: '3. FIFO Page Replacement', code: document.getElementById('raw-u3-3') ? document.getElementById('raw-u3-3').textContent : '' },
         { id: '3-4', name: '4. Paging Memory Management', code: document.getElementById('raw-u3-4') ? document.getElementById('raw-u3-4').textContent : '' },
         { id: '3-5', name: '5. SSTF Disk Scheduling', code: document.getElementById('raw-u3-5') ? document.getElementById('raw-u3-5').textContent : '' },
-        { id: '3-6', name: '6. Bar Plot with Error Bars', code: document.getElementById('raw-u3-6') ? document.getElementById('raw-u3-6').textContent : '' }
+        { id: '3-6', name: '6. Bar Plot with Error Bars', code: document.getElementById('raw-u3-6') ? document.getElementById('raw-u3-6').textContent : '' },
+        { id: '3-7', name: '7. Matrix', code: document.getElementById('raw-u3-7') ? document.getElementById('raw-u3-7').textContent : '' }
       ]
     };
 
